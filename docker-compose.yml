@@ -1,17 +1,17 @@
 version: "3.8"
 services:
   db:
-    container_name: postgres
+    container_name: text_search_postgres
     image: postgres
     restart: always
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: starter
+      POSTGRES_DB: text_search
     ports:
       - 5432:5432
   pgadmin:
-    container_name: pgadmin
+    container_name: text_search_pgadmin
     image: dpage/pgadmin4
     restart: always
     environment:
