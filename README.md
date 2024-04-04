@@ -1,9 +1,13 @@
-## About this project
-The technologies used in this project are:
-- Next.js
-- Postgres db (with docker)
-- Prisma for orm
-- Next-auth for authentication
+## To setup the project
+First of all, setup the .env file like my .env.example.
+Then: 
+
+```bash
+docker-compose up -d
+npm -i
+npx prisma generate
+npx prisma migrate dev --name init
+```
 
 ## To run the database:
 - docker-compose up -d
@@ -14,7 +18,7 @@ The technologies used in this project are:
 - docker container ls (to get the CONTAINER ID of the postgres image)
 - docker inspect CONTAINER ID (to find the IP of the container)
 - Then inside the pgAdmin -> Add new Server
-- On General tab put a name (e.g. 'test_db')
+- On General tab put a name (e.g. 'text_search')
 - On Connection tab enter the IP of the container on Hostname
 - Username and passoword: POSTGRES_USER and POSTGRES_PASSWORD
 
@@ -27,7 +31,3 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Sources:
-- https://www.youtube.com/watch?v=2kgqPvs0j_I&t=175s
-- https://github.com/TeoMastro/docker-compose-postgres
