@@ -10,5 +10,5 @@ datasource db {
 model TextVectors {
     id        Int     @id @default(autoincrement())
     text      String
-    vector Float[]
+    vector    Unsupported("vector")?
 }
