@@ -1,18 +1,23 @@
 "use client";
+import axios from "axios";
 
 export default async function Home() {
-	const handleSubmit = async (formData: FormData) => {
-		const searchText = formData.get("text");
-		const response = await fetch("/api/word2vec", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ searchText }),
-		});
-		const data = await response.json();
-		console.log(data.vector);
+	const handleSubmit = async (event: any) => {
+		event.preventDefault();
+		const formData = new FormData(event.target);
+		const searchText = formData.get('text');
+
+		try {
+			const response = await axios.post('/api/word2vec', {
+				searchText
+			});
+
+			console.log(response.data.vector);
+		} catch (error) {
+			console.error('some error');
+		}
 	};
+
 	return (
 		<>
 			<form
