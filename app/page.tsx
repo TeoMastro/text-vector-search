@@ -5,14 +5,16 @@ export default async function Home() {
 	const handleSubmit = async (event: any) => {
 		event.preventDefault();
 		const formData = new FormData(event.target);
-		const searchText = formData.get('text');
+		const text = formData.get('text');
 
 		try {
-			const response = await axios.post('/api/word2vec', {
-				searchText
+			const response = await axios.post('/api/wordtovec', {
+				text
 			});
 
-			console.log(response.data.vector);
+			console.log(response)
+
+
 		} catch (error) {
 			console.error('some error');
 		}
@@ -21,7 +23,7 @@ export default async function Home() {
 	return (
 		<>
 			<form
-				action={handleSubmit}
+				onSubmit={handleSubmit}
 				className="pt-10 max-w-full mx-5 md:mx-20"
 			>
 				<div className="mb-5">
