@@ -3,6 +3,7 @@ import gzip
 import shutil
 from flask import Flask, request, jsonify
 from gensim.models import KeyedVectors
+import numpy as np
 
 # Download the Word2Vec model
 url = 'https://drive.google.com/uc?id=0B7XkCwpI5KDYNlNUTTlSS21pQmM'
@@ -23,13 +24,22 @@ model = KeyedVectors.load_word2vec_format('GoogleNews-vectors-negative300.bin', 
 def vectorize_text():
     data = request.json
     text = data['text']
+    
+    # Split the text into words and filter out words not in the model
+    words = text.split()
+    words_in_model = [word for word in words if word in model.key_to_index]
+    
+    if not words_in_model:
+        # If no words in the sentence are in the model, return an error
+        return jsonify({'error': 'No words in vocabulary'}), 404
+    
     try:
-        # Attempt to get the vector for the input text
-        vector = model[text].tolist()  # Convert numpy array to list for JSON serialization
+        # Calculate the mean vector for the words in the sentence
+        vector = np.mean([model[word] for word in words_in_model], axis=0).tolist()
         return jsonify({'vector': vector})
-    except KeyError:
-        # Return an error if the word is not in the model's vocabulary
-        return jsonify({'error': 'Word not in vocabulary'}), 404
+    except KeyError as e:
+        # Return an error if a word is not in the model's vocabulary
+        return jsonify({'error': str(e)}), 404
 
 if __name__ == '__main__':
     app.run(debug=True)

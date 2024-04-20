@@ -1,3 +1,8 @@
+## Before you do anything, make sure you have installed:
+- Docker
+- Node
+- Python
+
 ## To setup the project
 First of all, setup the .env file like my .env.example.
 Then: 
@@ -31,3 +36,11 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## To run the word2vec api
+Run word2vec_endpoint.py in order to run the endpoint. This is required since it returns the user input as a vector so it can be compared to the stored vectors.
+
+# Finally
+- Open the project and navigate to /insert-data. This will populate your database with data that were created by generate-text-vectors.py (you don't have to run this script I already generated the data for you in simple_sentence_vectors.json)
+
+- After that, happy searching!
